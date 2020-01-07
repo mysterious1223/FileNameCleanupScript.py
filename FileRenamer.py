@@ -12,7 +12,7 @@ directoryName = sys.argv [1]
 #character set
 invalid_characters = "#$%&\'()*+ ,-=/:;<=>?@[\\]^_`{|}~"
 
-def clean_filename (filename):
+def clean_filename (filename, sourceDirectory):
 
     new_filename = filename
     #remove unwanted character s
@@ -21,15 +21,23 @@ def clean_filename (filename):
         
 
     #rename
-    os.rename (directoryName + '/' + filename,directoryName + '/' + new_filename)
-    print ("cleaning done : " +new_filename)
+    os.rename (sourceDirectory + '/' + filename, sourceDirectory + '/'+ new_filename)
+    print ("[+] cleaning done : " +new_filename)
+
+def ProcessClean (SourceDirectory):
+
+    for filename in os.listdir (SourceDirectory):
+
+        if (os.path.isfile (SourceDirectory + '/' + filename)):
+            #do something
+            print ("[-] cleaning : "+filename)
+            #process the clean
+            clean_filename (filename, SourceDirectory)
+        else:
+            print ("[-] Entering a sub directory -> " + SourceDirectory + '/' + filename)
+            ProcessClean (SourceDirectory + '/' + filename)
 
 
-for filename in os.listdir (directoryName):
-
-    #do something
-    print ("cleaning : "+filename)
-    #process the clean
-    clean_filename (filename)
+ProcessClean (directoryName)
 
     
