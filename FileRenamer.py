@@ -16,6 +16,11 @@ def clean_filename (filename, sourceDirectory):
 
     new_filename = filename
 
+    #remove period from first char
+
+    if (new_filename[0] == '.'):
+        print ("[!] contains period as first character!")
+        new_filename = new_filename [1:]
 
     #remove substrings
     for sub in invalid_substrings:
